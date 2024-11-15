@@ -6,6 +6,7 @@ import sameName from './components/SameName'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 import PersonsToShow from './components/PersonsToShow'
+import Notification from './components/Notification'
  
 
 const App = () => {
@@ -13,6 +14,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newSearch, setNewSearch] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage]= useState(null)
 
   const hook = () => {
     personService
@@ -50,10 +53,15 @@ const App = () => {
         personService
         .deletePerson(id)
         .then(response => {
-            setPersons(persons.filter((person) => 
-            person.id !== id)) 
-        
-    })
+          setPersons(persons.filter((person) => 
+          person.id !== id))
+          setSuccessMessage(`Removed ${personToDelete.name}`)
+          setTimeout(() => setSuccessMessage(null), 4000)
+        })
+        .catch((error) => {
+          setErrorMessage(`Person '${personToDelete.name}' was already removed from server`)
+          setTimeout(() => setErrorMessage(null), 4000)
+        })
     }
   }
 
@@ -77,7 +85,14 @@ const App = () => {
           setPersons(persons.map(person => person.id === personToUpdate.id ? returnedPerson : person))
           setNewName('')
           setNewNumber('')
+          setSuccessMessage(`'${newName}' number was updated succesfully`)
+          setTimeout(() => setSuccessMessage(null), 4000)
           return;
+          
+        })
+        .catch((error) => {
+          setErrorMessage(`Information of '${newName}' was already removed from server`)
+          setTimeout(() => setErrorMessage(null), 4000)
         })
       } else {
         return;
@@ -94,6 +109,8 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+          setSuccessMessage(`'${newName}' was added succesfully`)
+          setTimeout(() => setSuccessMessage(null), 4000)
         })
 
     }
@@ -105,6 +122,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} type="error" />
+      <Notification message={successMessage} type="success" />
       <Filter newSearch={newSearch} 
       handleSearchChange={handleSearchChange} />
       <h2>add a new</h2>
