@@ -1,6 +1,7 @@
 const { test, describe } = require('node:test')
 const assert = require('node:assert')
 const listHelper = require('../utils/list_helper')
+const { after } = require('lodash')
 
 test('dummy returns one', () => {
   const blogs = [ {likes: 1},
@@ -56,8 +57,8 @@ describe('Most likes', () => {
       {title: "another one", likes: 2, author: "1"}]
 
       const result = listHelper.mostLikes(blogs)
-      console.log("The result", result)
 
-      assert.deepStrictEqual(result, 1)
+      assert.deepStrictEqual(result, {author: "2", totalLikes: 22})
   })
 })
+

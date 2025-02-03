@@ -46,7 +46,6 @@ const mostLikes = (blogs) => {
   }
   const author_w_mostLikes = find_mostLikes(blogs_grouped)
 
-  console.log("!!!!!!!!!!!!!!!", author_w_mostLikes)
 
   return author_w_mostLikes
 }
