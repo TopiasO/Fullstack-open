@@ -1,9 +1,10 @@
 POST http://localhost:3000/api/blogs
 Content-Type: application/json
 
+
 {
-  "title": "Travel blog",
-  "author": "Blog writer",
-  "url": "https://minakirjoitanblogeja.com",
+  "title": "Travel bloggers lyfe",
+  "author": "Blog tiger",
+  "url": "https://blogejaminakirjoitan.com",
   "likes": 100
 }
